@@ -13,23 +13,23 @@ public class NativeLoader {
     }
 
     public static void loadLibrary(String libname) {
-        String extName = null;
         String sysName = null;
+        String libFile = null;
         String osName = System.getProperty("os.name").toLowerCase();
         if (osName.contains("windows")) {
-            extName = ".dll";
             sysName = "win32";
+            libFile = libname + ".dll";
         } else if (osName.contains("mac")) {
-            extName = ".jnilib";
             sysName = "darwin";
+            libFile = "lib" + libname + ".dylib";
         } else {
-            extName = ".so";
             sysName = "linux";
+            libFile = "lib" + libname + ".so";
         }
 
         String targetDir = System.getProperty("java.io.tmpdir");
+        String resourcePath = "/native/starjson/" + sysName + "/" + libFile;
 
-        String resourcePath = "/native/starjson/" + sysName + "/" + libname + extName;
         File tempFile = new File(targetDir + resourceToSystem(resourcePath));
         if (!tempFile.getParentFile().exists()) {
             tempFile.getParentFile().mkdirs();

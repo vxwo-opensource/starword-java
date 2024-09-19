@@ -28,7 +28,7 @@ public class StarJsonEngine {
     private static final Thread cleanupThread;
     private static final ReferenceQueue<StarJsonEngine> referenceQueue = new ReferenceQueue<>();
     static {
-        NativeLoader.loadLibrary("star-json");
+        NativeLoader.loadLibrary("starjson");
 
         cleanupThread = new Thread(() -> {
             while (true) {
