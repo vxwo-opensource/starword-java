@@ -10,6 +10,7 @@ src/main/resources/native/
 CMakeFiles/
 CMakeCache.txt
 
+bin/
 x64/
 Debug/
 Release/
