@@ -1,8 +1,9 @@
-#pragma once
+#ifndef TRIE_TREE_H_
+#define TRIE_TREE_H_
 
 #include "jwbase.h"
 
-typedef struct TrieIndex {
+typedef struct TrieFound {
   int value;
   size_t begin_index;
   size_t end_index;
@@ -11,25 +12,27 @@ typedef struct TrieIndex {
 class TrieTree final {
   struct TrieNode;
 
-public:
+ public:
   TrieTree();
   ~TrieTree();
 
-  bool empty() const;
+  bool IsEmpty() const;
 
-  void insert(const JWCharBuffer buffer, size_t length, int value);
-  void insert(JWChar prefix, const JWCharBuffer buffer, size_t length,
-              int value);
+  void AddWord(const JWCharBuffer buffer, size_t length, int value);
+  void AddWord(JWChar prefix, const JWCharBuffer buffer, size_t length,
+               int value);
 
-  bool parse(TrieIndex &found, const JWCharBuffer buffer, size_t begin_index,
-             size_t end_index) const;
+  bool SearchWord(TrieFound &found, const JWCharBuffer buffer,
+                  size_t begin_index, size_t end_index) const;
 
-private:
+ private:
   TrieNode *root_;
 
-  void append(TrieNode *node, const JWCharBuffer buffer, size_t length,
-              int value, size_t base_length);
+  void InsertWord(TrieNode *node, const JWCharBuffer buffer, size_t length,
+                  int value, size_t base_length);
 
-  TrieNode *find(const JWCharBuffer buffer, size_t begin_index,
-                 size_t end_index) const;
+  TrieNode *FindWord(const JWCharBuffer buffer, size_t begin_index,
+                     size_t end_index) const;
 };
+
+#endif

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef STAR_JSON_H_
+#define STAR_JSON_H_
 
 #include "jwbase.h"
 #include "trie_tree.h"
@@ -9,37 +10,39 @@ class StarJson final {
     size_t char_length;
   } StarContext;
 
-public:
+ public:
   StarJson(bool skip_number, size_t border);
   ~StarJson();
 
-  bool empty() const { return tree_.empty(); };
+  bool IsEmpty() const { return tree_.IsEmpty(); };
 
-  void add_prefix(const JWCharBuffer buffer, size_t length);
-  bool process_buffer(JWCharBuffer buffer, size_t length);
+  void AddPrefix(const JWCharBuffer buffer, size_t length);
+  bool ProcessBuffer(JWCharBuffer buffer, size_t length);
 
-private:
+ private:
   bool skip_number_;
   size_t border_;
   TrieTree tree_;
 
-  size_t process_complex_value(StarContext &context, JWCharBuffer buffer,
-                               size_t begin_index, size_t end_index,
-                               bool enter_array);
-  size_t process_simple_value(StarContext &context, JWCharBuffer buffer,
-                              size_t begin_index, size_t end_index);
+  size_t ProcessComplexValue(StarContext &context, JWCharBuffer buffer,
+                             size_t begin_index, size_t end_index,
+                             bool enter_array);
+  size_t ProcessSimpleValue(StarContext &context, JWCharBuffer buffer,
+                            size_t begin_index, size_t end_index);
 
-  void star_buffer(StarContext &context, JWCharBuffer buffer,
-                   size_t begin_index, size_t end_index, bool is_number);
+  void StarBuffer(StarContext &context, JWCharBuffer buffer, size_t begin_index,
+                  size_t end_index, bool is_number);
 
-  static ssize_t find_key_end(const JWCharBuffer buffer, size_t begin_index,
-                              size_t end_index);
-  static ssize_t find_soft_char_end(const JWCharBuffer buffer, JWChar skip,
-                                    JWChar target, size_t begin_index,
-                                    size_t end_index);
-  static ssize_t find_symbol_end(const JWCharBuffer buffer, size_t begin_index,
+  static ssize_t FindKeyEnd(const JWCharBuffer buffer, size_t begin_index,
+                            size_t eend_index);
+  static ssize_t FindSoftCharEnd(const JWCharBuffer buffer, JWChar skip,
+                                 JWChar target, size_t begin_index,
                                  size_t end_index);
+  static ssize_t FindSymbolEnd(const JWCharBuffer buffer, size_t begin_index,
+                               size_t end_index);
 
-  static ssize_t find_number_end(const JWCharBuffer buffer, size_t begin_index,
-                                 size_t end_index);
+  static ssize_t FindNumberEnd(const JWCharBuffer buffer, size_t begin_index,
+                               size_t end_index);
 };
+
+#endif

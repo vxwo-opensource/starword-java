@@ -5,7 +5,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 
-extern "C" void debug_output(const char *format, ...) {
+void DebugOutput(const char *format, ...) {
   FILE *fp = fopen("debug-output.log", "a+");
   if (fp != nullptr) {
     va_list args;

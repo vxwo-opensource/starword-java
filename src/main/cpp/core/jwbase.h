@@ -1,4 +1,5 @@
-#pragma once
+#ifndef JWBASE_H_
+#define JWBASE_H_
 
 #include <cstdint>
 
@@ -13,7 +14,9 @@ typedef uint16_t JWChar;
 typedef JWChar *JWCharBuffer;
 
 #ifdef NDEBUG
-#define debug_output(...)
+#define DebugOutput(...)
 #else
-extern "C" void debug_output(const char *format, ...);
+void DebugOutput(const char *format, ...);
+#endif
+
 #endif

@@ -22,7 +22,7 @@ aux_source_directory(src/main/cpp/core CORE_SOURCES)
 add_library(
   ${PROJECT_NAME}
   SHARED
-  src/main/cpp/star-json-jni.cpp ${CORE_SOURCES}
+  src/main/cpp/star-json-jni.cc ${CORE_SOURCES}
 )
 target_link_libraries(
   ${PROJECT_NAME}

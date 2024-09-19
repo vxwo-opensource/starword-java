@@ -1,6 +1,8 @@
-#include "core/star_json.h"
 #include <jni.h>
+
 #include <vector>
+
+#include "core/star_json.h"
 
 extern "C" JNIEXPORT jlong JNICALL
 Java_org_vxwo_jni_starjson_StarJsonEngine_nativeCreate(JNIEnv *env,
@@ -13,7 +15,7 @@ Java_org_vxwo_jni_starjson_StarJsonEngine_nativeCreate(JNIEnv *env,
   for (int i = 0; i < count; ++i) {
     jstring keyword = (jstring)env->GetObjectArrayElement(keywords, i);
     const jchar *buffer = env->GetStringCritical(keyword, 0);
-    starJson->add_prefix((JWCharBuffer)buffer, env->GetStringLength(keyword));
+    starJson->AddPrefix((JWCharBuffer)buffer, env->GetStringLength(keyword));
     env->ReleaseStringCritical(keyword, buffer);
   }
   return (jlong)starJson;
@@ -36,7 +38,7 @@ Java_org_vxwo_jni_starjson_StarJsonEngine_nativeProcess(JNIEnv *env,
   env->GetStringRegion(content, 0, length, buffer.data());
 
   StarJson *starJson = (StarJson *)ptr;
-  if (!starJson->process_buffer(buffer.data(), length)) {
+  if (!starJson->ProcessBuffer(buffer.data(), length)) {
     return content;
   }
 
