@@ -26,9 +26,9 @@ target_link_libraries(
   ${JNI_LIBRARIES}
 )
 
+set(NATIVE_RESOURCES_DIR "${PROJECT_SOURCE_DIR}/src/main/resources/native/starjson/${PLATFORM_KEY}/")
 add_custom_command(
   TARGET ${PROJECT_NAME} POST_BUILD
-  COMMAND ${CMAKE_COMMAND} -E copy
-  "$<TARGET_FILE:${PROJECT_NAME}>"
-  "${PROJECT_SOURCE_DIR}/src/main/resources/native/starjson/${PLATFORM_KEY}/"
+  COMMAND ${CMAKE_COMMAND} -E make_directory "${NATIVE_RESOURCES_DIR}"
+  COMMAND ${CMAKE_COMMAND} -E copy "$<TARGET_FILE:${PROJECT_NAME}>" "${NATIVE_RESOURCES_DIR}"
 )

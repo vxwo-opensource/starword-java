@@ -11,6 +11,9 @@ CMakeFiles/
 CMakeCache.txt
 
 bin/
+Makefile
+libstarjson.*
+
 x64/
 Debug/
 Release/
