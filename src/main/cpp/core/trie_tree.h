@@ -5,8 +5,8 @@
 
 typedef struct TrieFound {
   int value;
-  size_t begin_index;
-  size_t end_index;
+  size_t start_index;
+  size_t stop_index;
 } TrieIndex;
 
 class TrieTree final {
@@ -23,7 +23,7 @@ class TrieTree final {
                int value);
 
   bool SearchWord(TrieFound &found, const JWCharBuffer buffer,
-                  size_t begin_index, size_t end_index) const;
+                  size_t start_index, size_t end_index) const;
 
  private:
   TrieNode *root_;
@@ -31,7 +31,7 @@ class TrieTree final {
   void InsertWord(TrieNode *node, const JWCharBuffer buffer, size_t length,
                   int value, size_t base_length);
 
-  TrieNode *FindWord(const JWCharBuffer buffer, size_t begin_index,
+  TrieNode *FindWord(const JWCharBuffer buffer, size_t start_index,
                      size_t end_index) const;
 };
 

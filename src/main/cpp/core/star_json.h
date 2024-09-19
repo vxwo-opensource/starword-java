@@ -25,23 +25,23 @@ class StarJson final {
   TrieTree tree_;
 
   size_t ProcessComplexValue(StarContext &context, JWCharBuffer buffer,
-                             size_t begin_index, size_t end_index,
+                             size_t start_index, size_t end_index,
                              bool enter_array);
   size_t ProcessSimpleValue(StarContext &context, JWCharBuffer buffer,
-                            size_t begin_index, size_t end_index);
+                            size_t start_index, size_t end_index);
 
-  void StarBuffer(StarContext &context, JWCharBuffer buffer, size_t begin_index,
+  void StarBuffer(StarContext &context, JWCharBuffer buffer, size_t start_index,
                   size_t end_index, bool is_number);
 
-  static ssize_t FindKeyEnd(const JWCharBuffer buffer, size_t begin_index,
+  static ssize_t FindKeyEnd(const JWCharBuffer buffer, size_t start_index,
                             size_t eend_index);
   static ssize_t FindSoftCharEnd(const JWCharBuffer buffer, JWChar skip,
-                                 JWChar target, size_t begin_index,
+                                 JWChar target, size_t start_index,
                                  size_t end_index);
-  static ssize_t FindSymbolEnd(const JWCharBuffer buffer, size_t begin_index,
+  static ssize_t FindSymbolEnd(const JWCharBuffer buffer, size_t start_index,
                                size_t end_index);
 
-  static ssize_t FindNumberEnd(const JWCharBuffer buffer, size_t begin_index,
+  static ssize_t FindNumberEnd(const JWCharBuffer buffer, size_t start_index,
                                size_t end_index);
 };
 

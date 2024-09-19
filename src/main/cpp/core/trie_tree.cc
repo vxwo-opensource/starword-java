@@ -73,12 +73,12 @@ void TrieTree::AddWord(JWChar prefix, const JWCharBuffer buffer, size_t length,
   InsertWord(DigTrieNode(root_, prefix), buffer, length, value, 1);
 }
 
-TrieNode *TrieTree::FindWord(const JWCharBuffer buffer, size_t begin_index,
+TrieNode *TrieTree::FindWord(const JWCharBuffer buffer, size_t start_index,
                              size_t end_index) const {
   TrieNode *current = root_;
   std::vector<TrieNode *> cached;
 
-  for (size_t i = begin_index; i < end_index; i++) {
+  for (size_t i = start_index; i < end_index; i++) {
     auto child = current->children.find(buffer[i]);
     if (child == current->children.end()) {
       break;
@@ -94,13 +94,13 @@ TrieNode *TrieTree::FindWord(const JWCharBuffer buffer, size_t begin_index,
 }
 
 bool TrieTree::SearchWord(TrieFound &found, const JWCharBuffer buffer,
-                          size_t begin_index, size_t end_index) const {
-  for (size_t i = begin_index; i < end_index; ++i) {
+                          size_t start_index, size_t end_index) const {
+  for (size_t i = start_index; i < end_index; ++i) {
     TrieNode *node = FindWord(buffer, i, end_index);
     if (node != nullptr) {
       found.value = node->value;
-      found.begin_index = i;
-      found.end_index = i + node->length;
+      found.start_index = i;
+      found.stop_index = i + node->length;
       return true;
     }
   }
