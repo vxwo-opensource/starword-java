@@ -3,20 +3,13 @@ cmake_minimum_required (VERSION 2.8.12)
 project ("starjson")
 
 if (CMAKE_HOST_WIN32)
-  set(WINDOWS 1)
-  set(PLATFORM_PATH "/win32")
-  set(NATIVE_BINARY_FILE "${PROJECT_NAME}.dll")
+  set(PLATFORM_KEY "win32")
 elseif(CMAKE_HOST_APPLE)
-  set(MACOS 1)
-  set(PLATFORM_PATH "/darwin")
-  set(NATIVE_BINARY_FILE "lib${PROJECT_NAME}.dylib")
+  set(PLATFORM_KEY "darwin")
 else()
-  set(LINUX 1)
-  set(PLATFORM_PATH "/linux")
-  set(NATIVE_BINARY_FILE "lib${PROJECT_NAME}.so")
+  set(PLATFORM_KEY "linux")
 endif()
 
-set(JNI_FIND_COMPONENTS JVM)
 find_package (JNI REQUIRED)
 include_directories(${JNI_INCLUDE_DIRS})
 
@@ -35,7 +28,7 @@ target_link_libraries(
 
 add_custom_command(
   TARGET ${PROJECT_NAME} POST_BUILD
-  COMMAND ${CMAKE_COMMAND} -E copy_if_different
-  "${PROJECT_BINARY_DIR}/$<$<CONFIG:Release>:Release/>$<$<CONFIG:Debug>:Debug/>${NATIVE_BINARY_FILE}"
-  "${PROJECT_SOURCE_DIR}/src/main/resources/native/starjson${PLATFORM_PATH}/"
+  COMMAND ${CMAKE_COMMAND} -E copy
+  "$<TARGET_FILE:${PROJECT_NAME}>"
+  "${PROJECT_SOURCE_DIR}/src/main/resources/native/starjson/${PLATFORM_KEY}/"
 )
