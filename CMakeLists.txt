@@ -10,6 +10,10 @@ else()
   set(PLATFORM_KEY "linux")
 endif()
 
+if (NOT CMAKE_HOST_WIN32)
+  list(APPEND CMAKE_CXX_FLAGS "-std=c++11")
+endif()
+
 find_package (JNI REQUIRED)
 include_directories(${JNI_INCLUDE_DIRS})
 
