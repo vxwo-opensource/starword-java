@@ -5,11 +5,11 @@
 #include "core/src/star_json.h"
 
 extern "C" JNIEXPORT jlong JNICALL
-Java_org_vxwo_jni_starjson_StarJsonEngine_nativeCreate(JNIEnv *env,
-                                                       jobject thisObject,
-                                                       jobjectArray keywords,
-                                                       jboolean skipNumber,
-                                                       jint border) {
+Java_org_vxwo_jni_starjson_internal_NativeEngine_create(JNIEnv *env,
+                                                        jobject thisObject,
+                                                        jobjectArray keywords,
+                                                        jboolean skipNumber,
+                                                        jint border) {
   StarJson *starJson = new StarJson(skipNumber, border);
   jsize count = env->GetArrayLength(keywords);
   for (int i = 0; i < count; ++i) {
@@ -17,22 +17,23 @@ Java_org_vxwo_jni_starjson_StarJsonEngine_nativeCreate(JNIEnv *env,
     const jchar *buffer = env->GetStringCritical(keyword, 0);
     starJson->AddPrefix((sjchar_t *)buffer, env->GetStringLength(keyword));
     env->ReleaseStringCritical(keyword, buffer);
+    env->DeleteLocalRef(keyword);
   }
   return (jlong)starJson;
 }
 
 extern "C" JNIEXPORT void JNICALL
-Java_org_vxwo_jni_starjson_StarJsonEngine_nativeCleanup(JNIEnv *env,
-                                                        jobject thisObject,
-                                                        jlong ptr) {
+Java_org_vxwo_jni_starjson_internal_NativeEngine_cleanup(JNIEnv *env,
+                                                         jobject thisObject,
+                                                         jlong ptr) {
   delete (StarJson *)ptr;
 }
 
 extern "C" JNIEXPORT jstring JNICALL
-Java_org_vxwo_jni_starjson_StarJsonEngine_nativeProcess(JNIEnv *env,
-                                                        jobject thisObject,
-                                                        jlong ptr,
-                                                        jstring content) {
+Java_org_vxwo_jni_starjson_internal_NativeEngine_process(JNIEnv *env,
+                                                         jobject thisObject,
+                                                         jlong ptr,
+                                                         jstring content) {
   jsize length = env->GetStringLength(content);
   std::vector<sjchar_t> buffer(length + 1);
   env->GetStringRegion(content, 0, length, (jchar *)buffer.data());
