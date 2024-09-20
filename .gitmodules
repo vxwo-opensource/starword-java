@@ -1,0 +1,3 @@
+[submodule "src/native/core"]
+	path = src/native/core
+	url = https://github.com/vxwo-opensource/star-json-core.git
