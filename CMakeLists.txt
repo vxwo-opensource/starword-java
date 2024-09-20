@@ -17,12 +17,12 @@ endif()
 find_package (JNI REQUIRED)
 include_directories(${JNI_INCLUDE_DIRS})
 
-aux_source_directory(src/main/cpp/core CORE_SOURCES)
+aux_source_directory(src/native/core/src CORE_SOURCES)
 
 add_library(
   ${PROJECT_NAME}
   SHARED
-  src/main/cpp/star-json-jni.cc ${CORE_SOURCES}
+  src/native/star-json-jni.cc ${CORE_SOURCES}
 )
 target_link_libraries(
   ${PROJECT_NAME}

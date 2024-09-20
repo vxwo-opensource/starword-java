@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "core/star_json.h"
+#include "core/src/star_json.h"
 
 extern "C" JNIEXPORT jlong JNICALL
 Java_org_vxwo_jni_starjson_StarJsonEngine_nativeCreate(JNIEnv *env,
