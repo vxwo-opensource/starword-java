@@ -15,7 +15,7 @@ Java_org_vxwo_jni_starjson_internal_NativeEngine_create(JNIEnv *env,
   for (int i = 0; i < count; ++i) {
     jstring keyword = (jstring)env->GetObjectArrayElement(keywords, i);
     const jchar *buffer = env->GetStringCritical(keyword, 0);
-    starJson->AddPrefix((sjchar_t *)buffer, env->GetStringLength(keyword));
+    starJson->AddPrefix((skchar_t *)buffer, env->GetStringLength(keyword));
     env->ReleaseStringCritical(keyword, buffer);
     env->DeleteLocalRef(keyword);
   }
@@ -35,7 +35,7 @@ Java_org_vxwo_jni_starjson_internal_NativeEngine_process(JNIEnv *env,
                                                          jlong ptr,
                                                          jstring content) {
   jsize length = env->GetStringLength(content);
-  std::vector<sjchar_t> buffer(length + 1);
+  std::vector<skchar_t> buffer(length + 1);
   env->GetStringRegion(content, 0, length, (jchar *)buffer.data());
 
   StarJson *starJson = (StarJson *)ptr;
