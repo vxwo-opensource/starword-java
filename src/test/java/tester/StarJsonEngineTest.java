@@ -10,6 +10,14 @@ public class StarJsonEngineTest {
             StarJsonEngine.create(new String[] {"phone", "mobile"}, false, 2);
 
     @Test
+    @Order(1000)
+    void testStarJsonIgnore() {
+        String json = "{\"number\":\"12345678\"}";
+        String target = "{\"number\":\"12345678\"}";
+        Assertions.assertEquals(target, starEngine.process(json));
+    }
+
+    @Test
     @Order(1001)
     void testStarJsonSimple() {
         String json = "{\"phone\":\"12345678\"}";
