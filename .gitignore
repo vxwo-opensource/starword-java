@@ -12,7 +12,7 @@ CMakeCache.txt
 
 bin/
 Makefile
-libstarjson.*
+libstarkeyword.*
 
 x64/
 Debug/
