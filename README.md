@@ -1,5 +1,5 @@
-star-json-java
+star-keyword-java
 ===================================
 
-A native JSON text star library for Java
+A native star text by keywords library for Java
 

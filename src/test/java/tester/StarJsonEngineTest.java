@@ -3,7 +3,7 @@ package tester;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.vxwo.jni.starjson.StarJsonEngine;
+import org.vxwo.starkeyword.StarJsonEngine;
 
 public class StarJsonEngineTest {
     private static StarJsonEngine starEngine =

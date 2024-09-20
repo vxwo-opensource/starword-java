@@ -1,4 +1,4 @@
-package org.vxwo.jni.starjson.internal;
+package org.vxwo.starkeyword.internal;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,7 +28,7 @@ public class NativeLoader {
         }
 
         String targetDir = System.getProperty("java.io.tmpdir");
-        String resourcePath = "/native/starjson/" + sysName + "/" + libFile;
+        String resourcePath = "/native/" + libname + "/" + sysName + "/" + libFile;
 
         File tempFile = new File(targetDir + resourceToSystem(resourcePath));
         if (!tempFile.getParentFile().exists()) {
