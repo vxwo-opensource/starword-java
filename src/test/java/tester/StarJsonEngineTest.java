@@ -8,20 +8,28 @@ import org.vxwo.starkeyword.StarJsonEngine;
 public class StarJsonEngineTest {
     private static final String[] keywords = new String[] {"phone", "mobile"};
 
+    private StarJsonEngine getDefaultEngine() {
+        return StarJsonEngine.create(keywords, false, false, 2);
+    }
+
     @Test
     @Order(1000)
     void testStarJsonIgnore() {
-        StarJsonEngine starEngine = StarJsonEngine.create(keywords, false, 2);
+        StarJsonEngine starEngine = getDefaultEngine();
 
         String source = "{\"number\":\"12345678\"}";
         String target = "{\"number\":\"12345678\"}";
         Assertions.assertEquals(target, starEngine.process(source));
+
+        String source1 = "{\"PhonE\":\"12345678\"}";
+        String target1 = "{\"PhonE\":\"12345678\"}";
+        Assertions.assertEquals(target1, starEngine.process(source1));
     }
 
     @Test
     @Order(1001)
     void testStarJsonSimple() {
-        StarJsonEngine starEngine = StarJsonEngine.create(keywords, false, 2);
+        StarJsonEngine starEngine = getDefaultEngine();
 
         String source = "{\"phone\":\"12345678\"}";
         String target = "{\"phone\":\"12****78\"}";
@@ -31,7 +39,7 @@ public class StarJsonEngineTest {
     @Test
     @Order(1002)
     void testStarJsonEmpty() {
-        StarJsonEngine starEngine = StarJsonEngine.create(keywords, false, 2);
+        StarJsonEngine starEngine = getDefaultEngine();
 
         String source = "{\"phone\":\"\"}";
         String target = "{\"phone\":\"\"}";
@@ -41,7 +49,7 @@ public class StarJsonEngineTest {
     @Test
     @Order(1003)
     void testStarJsonSymbol() {
-        StarJsonEngine starEngine = StarJsonEngine.create(keywords, false, 2);
+        StarJsonEngine starEngine = getDefaultEngine();
 
         String source = "{\"phone\": null, \"num\": 1}";
         String target = "{\"phone\": null, \"num\": 1}";
@@ -59,7 +67,7 @@ public class StarJsonEngineTest {
     @Test
     @Order(1004)
     void testStarJsonNUmber() {
-        StarJsonEngine starEngine = StarJsonEngine.create(keywords, false, 2);
+        StarJsonEngine starEngine = getDefaultEngine();
 
         String source1 = "{\"phone\": 12345678}";
         String target1 = "{\"phone\": 12****78}";
@@ -101,7 +109,7 @@ public class StarJsonEngineTest {
     @Test
     @Order(1011)
     void testStarJsonNoKey() {
-        StarJsonEngine starEngine = StarJsonEngine.create(keywords, false, 2);
+        StarJsonEngine starEngine = getDefaultEngine();
 
         String source = "{\"cctv\":\"123\"}";
         Assertions.assertEquals(source, starEngine.process(source));
@@ -110,7 +118,7 @@ public class StarJsonEngineTest {
     @Test
     @Order(1012)
     void testStarJsonNoKeyEnd() {
-        StarJsonEngine starEngine = StarJsonEngine.create(keywords, false, 2);
+        StarJsonEngine starEngine = getDefaultEngine();
 
         String source = "{\"phone,\"mobile\":\"12345678\"}";
         String target = "{\"phone,\"mobile\":\"12****78\"}";
@@ -120,7 +128,7 @@ public class StarJsonEngineTest {
     @Test
     @Order(1021)
     void testStarJsonNoValue() {
-        StarJsonEngine starEngine = StarJsonEngine.create(keywords, false, 2);
+        StarJsonEngine starEngine = getDefaultEngine();
 
         String source = "{\"phone\",\"mobile\":\"12345678\"}";
         String target = "{\"phone\",\"mobile\":\"12****78\"}";
@@ -130,7 +138,7 @@ public class StarJsonEngineTest {
     @Test
     @Order(1022)
     void testStarJsonIgnoreValue() {
-        StarJsonEngine starEngine = StarJsonEngine.create(keywords, false, 2);
+        StarJsonEngine starEngine = getDefaultEngine();
 
         String source = "{\"phone\":  12345678,\"mobile\":\"12345678\"}";
         String target = "{\"phone\":  12****78,\"mobile\":\"12****78\"}";
@@ -140,7 +148,7 @@ public class StarJsonEngineTest {
     @Test
     @Order(1023)
     void testStarJsonMutipleValue() {
-        StarJsonEngine starEngine = StarJsonEngine.create(keywords, false, 2);
+        StarJsonEngine starEngine = getDefaultEngine();
 
         String source = "{\"phone\":\"12345678\",\"mobile\":\"12345678\"}";
         String target = "{\"phone\":\"12****78\",\"mobile\":\"12****78\"}";
@@ -150,7 +158,7 @@ public class StarJsonEngineTest {
     @Test
     @Order(1031)
     void testStarJsonLevel() {
-        StarJsonEngine starEngine = StarJsonEngine.create(keywords, false, 2);
+        StarJsonEngine starEngine = getDefaultEngine();
 
         String source = "{\"phone\":{\"mobile\":\"12345678\"}}";
         String target = "{\"phone\":{\"mobile\":\"12****78\"}}";
@@ -160,7 +168,7 @@ public class StarJsonEngineTest {
     @Test
     @Order(1032)
     void testStarJsonInline() {
-        StarJsonEngine starEngine = StarJsonEngine.create(keywords, false, 2);
+        StarJsonEngine starEngine = getDefaultEngine();
 
         String source = "{\"phone\": {\\\"phone\\\": \\\"12345678\\\"}}";
         String target = "{\"phone\": {\\\"phone\\\": \\\"12****78\\\"}}";
@@ -170,7 +178,7 @@ public class StarJsonEngineTest {
     @Test
     @Order(1041)
     void testStarJsonEscapeDoubleQuoteFirst() {
-        StarJsonEngine starEngine = StarJsonEngine.create(keywords, false, 2);
+        StarJsonEngine starEngine = getDefaultEngine();
 
         String source = "{\"phone\":\"\\\"12345678\"}";
         String target = "{\"phone\":\"\\\"******78\"}";
@@ -180,7 +188,7 @@ public class StarJsonEngineTest {
     @Test
     @Order(1042)
     void testStarJsonEscapeDoubleQuoteMiddle() {
-        StarJsonEngine starEngine = StarJsonEngine.create(keywords, false, 2);
+        StarJsonEngine starEngine = getDefaultEngine();
 
         String source = "{\"phone\":\"12345\\\"678\"}";
         String target = "{\"phone\":\"12******78\"}";
@@ -190,7 +198,7 @@ public class StarJsonEngineTest {
     @Test
     @Order(1043)
     void testStarJsonEscapeDoubleQuoteEnd() {
-        StarJsonEngine starEngine = StarJsonEngine.create(keywords, false, 2);
+        StarJsonEngine starEngine = getDefaultEngine();
 
         String source = "{\"phone\":\"12345678\\\"\"}";
         String target = "{\"phone\":\"12******\\\"\"}";
@@ -200,7 +208,7 @@ public class StarJsonEngineTest {
     @Test
     @Order(1051)
     void testStarJsonEscapeBackSlashOnEnd() {
-        StarJsonEngine starEngine = StarJsonEngine.create(keywords, false, 2);
+        StarJsonEngine starEngine = getDefaultEngine();
 
         String source = "{\"phone\":\"12345678\\\\\"}";
         String target = "{\"phone\":\"12******\\\\\"}";
@@ -210,7 +218,7 @@ public class StarJsonEngineTest {
     @Test
     @Order(1052)
     void testStarJsonEscapeBackSlashOnly() {
-        StarJsonEngine starEngine = StarJsonEngine.create(keywords, false, 2);
+        StarJsonEngine starEngine = getDefaultEngine();
 
         String source = "{\"phone\":\"\\\\\\\\\\\\\"}";
         String target = "{\"phone\":\"\\\\**\\\\\"}";
@@ -220,7 +228,7 @@ public class StarJsonEngineTest {
     @Test
     @Order(1061)
     void testStarJsonArray() {
-        StarJsonEngine starEngine = StarJsonEngine.create(keywords, false, 2);
+        StarJsonEngine starEngine = getDefaultEngine();
 
         String source = "{\"phone\":[\"12345678\"]}";
         String target = "{\"phone\":[\"12****78\"]}";
@@ -230,7 +238,7 @@ public class StarJsonEngineTest {
     @Test
     @Order(1062)
     void testStarJsonArrayNumber() {
-        StarJsonEngine starEngine = StarJsonEngine.create(keywords, false, 2);
+        StarJsonEngine starEngine = getDefaultEngine();
 
         String source = "{\"phone\":[12345678,,12345678,  ,]}";
         String target = "{\"phone\":[12****78,,12****78,  ,]}";
@@ -240,7 +248,7 @@ public class StarJsonEngineTest {
     @Test
     @Order(1063)
     void testStarJsonArrayInline() {
-        StarJsonEngine starEngine = StarJsonEngine.create(keywords, false, 2);
+        StarJsonEngine starEngine = getDefaultEngine();
 
         String source = "{\"phone\":[12345678,,[12345678]}";
         String target = "{\"phone\":[12****78,,[12345678]}";
@@ -250,10 +258,20 @@ public class StarJsonEngineTest {
     @Test
     @Order(2000)
     void testStarJsonNoBorder() {
-        StarJsonEngine starEngine = StarJsonEngine.create(keywords, false, 0);
+        StarJsonEngine starEngine = StarJsonEngine.create(keywords, false, false, 0);
 
         String source = "{\"phone\":\"12345678\"}";
         String target = "{\"phone\":\"********\"}";
+        Assertions.assertEquals(target, starEngine.process(source));
+    }
+
+    @Test
+    @Order(2001)
+    void testStarJsonIgnoreCase() {
+        StarJsonEngine starEngine = StarJsonEngine.create(keywords, true, false, 0);
+
+        String source = "{\"PhonE\":\"12345678\"}";
+        String target = "{\"PhonE\":\"********\"}";
         Assertions.assertEquals(target, starEngine.process(source));
     }
 }

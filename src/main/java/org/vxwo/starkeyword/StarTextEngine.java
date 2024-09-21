@@ -17,8 +17,8 @@ public class StarTextEngine extends BaseNativeObject {
         return NativeEngine.starTextProcess(getNativePtr(), content);
     }
 
-    public static StarTextEngine create(String[] keywords, int border) {
-        long nativePtr = NativeEngine.starTextCreate(keywords, border);
+    public static StarTextEngine create(String[] keywords, boolean ignoreCawe, int border) {
+        long nativePtr = NativeEngine.starTextCreate(keywords, ignoreCawe, border);
         StarTextEngine obj = new StarTextEngine(nativePtr);
         NativeCleanuper.register(obj);
         return obj;

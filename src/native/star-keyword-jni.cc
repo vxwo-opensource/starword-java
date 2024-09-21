@@ -7,9 +7,9 @@
 
 extern "C" JNIEXPORT jlong JNICALL
 Java_org_vxwo_starkeyword_internal_NativeEngine_starJsonCreate(
-    JNIEnv *env, jobject thisObject, jobjectArray keywords, jboolean skipNumber,
-    jint border) {
-  StarJson *starJson = new StarJson(skipNumber, border);
+    JNIEnv *env, jobject thisObject, jobjectArray keywords, jboolean ignoreCase,
+    jboolean skipNumber, jint border) {
+  StarJson *starJson = new StarJson(ignoreCase, skipNumber, border);
   jsize count = env->GetArrayLength(keywords);
   for (int i = 0; i < count; ++i) {
     jstring keyword = (jstring)env->GetObjectArrayElement(keywords, i);
@@ -44,8 +44,9 @@ Java_org_vxwo_starkeyword_internal_NativeEngine_starJsonProcess(
 
 extern "C" JNIEXPORT jlong JNICALL
 Java_org_vxwo_starkeyword_internal_NativeEngine_starTextCreate(
-    JNIEnv *env, jobject thisObject, jobjectArray keywords, jint border) {
-  StarText *starText = new StarText(border);
+    JNIEnv *env, jobject thisObject, jobjectArray keywords, jboolean ignoreCase,
+    jint border) {
+  StarText *starText = new StarText(ignoreCase, border);
   jsize count = env->GetArrayLength(keywords);
   for (int i = 0; i < count; ++i) {
     jstring keyword = (jstring)env->GetObjectArrayElement(keywords, i);
