@@ -13,9 +13,13 @@ public class StarTextEngineTest {
     void testStarTextIgnore() {
         StarTextEngine starEngine = StarTextEngine.create(keywords, 1);
 
-        String json = "i have a number";
+        String source = "i have a number";
         String target = "i have a number";
-        Assertions.assertEquals(target, starEngine.process(json));
+        Assertions.assertEquals(target, starEngine.process(source));
+
+        String source1 = "i have a Number";
+        String target1 = "i have a Number";
+        Assertions.assertEquals(target1, starEngine.process(source1));
     }
 
     @Test
@@ -23,9 +27,9 @@ public class StarTextEngineTest {
     void testStarTextSimple() {
         StarTextEngine starEngine = StarTextEngine.create(keywords, 1);
 
-        String json = "i have a phone";
+        String source = "i have a phone";
         String target = "i have a p***e";
-        Assertions.assertEquals(target, starEngine.process(json));
+        Assertions.assertEquals(target, starEngine.process(source));
     }
 
     @Test
@@ -33,9 +37,9 @@ public class StarTextEngineTest {
     void testStarTextMuiltple() {
         StarTextEngine starEngine = StarTextEngine.create(keywords, 1);
 
-        String json = "i have a phone, mobile, phone2, mobile2";
+        String source = "i have a phone, mobile, phone2, mobile2";
         String target = "i have a p***e, m****e, p***e2, m****e2";
-        Assertions.assertEquals(target, starEngine.process(json));
+        Assertions.assertEquals(target, starEngine.process(source));
     }
 
 
@@ -44,13 +48,13 @@ public class StarTextEngineTest {
     void testStarTextNoBorder() {
         StarTextEngine starEngine = StarTextEngine.create(keywords, 0);
 
-        String json = "i have a phone";
+        String source = "i have a phone";
         String target = "i have a *****";
-        Assertions.assertEquals(target, starEngine.process(json));
+        Assertions.assertEquals(target, starEngine.process(source));
 
-        String json1 = "phone";
+        String source1 = "phone";
         String target1 = "*****";
-        Assertions.assertEquals(target1, starEngine.process(json1));
+        Assertions.assertEquals(target1, starEngine.process(source1));
     }
 
 }
