@@ -1,16 +1,16 @@
 cmake_minimum_required (VERSION 2.8.12)
 
-project ("starkeyword")
-
+project ("starkeyword-jni")
 if (CMAKE_HOST_WIN32)
-  set(PLATFORM_KEY "win32")
+  set(OS_KEY "win32")
 elseif(CMAKE_HOST_APPLE)
-  set(PLATFORM_KEY "darwin")
+  set(OS_KEY "darwin")
   list(APPEND CMAKE_CXX_FLAGS "-std=c++11")
 else()
-  set(PLATFORM_KEY "linux")
+  set(OS_KEY "linux")
   list(APPEND CMAKE_CXX_FLAGS "-static-libstdc++")
 endif()
+set(ARCH_KEY "${CMAKE_HOST_SYSTEM_PROCESSOR}")
 
 find_package (JNI REQUIRED)
 include_directories(${JNI_INCLUDE_DIRS})
@@ -28,7 +28,7 @@ target_link_libraries(
   ${JNI_LIBRARIES}
 )
 
-set(NATIVE_RESOURCES_DIR "${PROJECT_SOURCE_DIR}/src/main/resources/native/${PROJECT_NAME}/${PLATFORM_KEY}/")
+set(NATIVE_RESOURCES_DIR "${PROJECT_SOURCE_DIR}/src/main/resources/jni/${OS_KEY}/${ARCH_KEY}")
 add_custom_command(
   TARGET ${PROJECT_NAME} POST_BUILD
   COMMAND ${CMAKE_COMMAND} -E make_directory "${NATIVE_RESOURCES_DIR}"

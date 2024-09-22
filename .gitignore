@@ -4,7 +4,7 @@ GRTAGS
 
 .*
 target/
-src/main/resources/native/
+src/main/resources/jni/
 
 *.cmake
 CMakeFiles/

@@ -15,6 +15,6 @@ public class NativeEngine {
     public static native String starTextProcess(long ptr, String content);
 
     static {
-        NativeLoader.loadLibrary("starkeyword");
+        NativeLoader.loadLibrary("starkeyword-jni");
     }
 }
