@@ -15,12 +15,12 @@ set(ARCH_KEY "${CMAKE_HOST_SYSTEM_PROCESSOR}")
 find_package (JNI REQUIRED)
 include_directories(${JNI_INCLUDE_DIRS})
 
-aux_source_directory(src/native/core/src CORE_SOURCES)
+aux_source_directory(jni/core/src CORE_SOURCES)
 
 add_library(
   ${PROJECT_NAME}
   SHARED
-  src/native/star-keyword-jni.cc ${CORE_SOURCES}
+  jni/star-keyword-jni.cc ${CORE_SOURCES}
 )
 target_link_libraries(
   ${PROJECT_NAME}
