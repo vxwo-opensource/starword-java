@@ -47,19 +47,37 @@ public class NativeLoader {
             libFile = "lib" + libname + ".so";
         }
 
-        String targetDir = System.getProperty("java.io.tmpdir");
+        String filePath = "/jni/" + libFile;
         String resourcePath = "/jni/" + osName + "/" + getArch() + "/" + libFile;
 
-        File tempFile = new File(targetDir + resourceToSystem(resourcePath));
-        if (!tempFile.getParentFile().exists()) {
-            tempFile.getParentFile().mkdirs();
+        File outFile = null;
+        InputStream in = null;
+        try {
+            in = NativeLoader.class.getResourceAsStream(resourcePath);
+            if (in != null) {
+                outFile =
+                        new File(System.getProperty("java.io.tmpdir") + resourceToSystem(filePath));
+                if (!outFile.getParentFile().exists()) {
+                    outFile.getParentFile().mkdirs();
+                }
+                Files.copy(in, outFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            }
+
+        } catch (Throwable ex) {
+            outFile = null;
+        } finally {
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                }
+            }
         }
 
-        try (InputStream in = NativeLoader.class.getResourceAsStream(resourcePath)) {
-            Files.copy(in, tempFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException ex) {
+        if (outFile != null) {
+            System.load(outFile.getPath());
+        } else {
+            System.loadLibrary(libname);
         }
-
-        System.load(tempFile.getPath());
     }
 }
