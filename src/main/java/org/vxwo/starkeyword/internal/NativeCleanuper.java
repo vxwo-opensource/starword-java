@@ -21,6 +21,8 @@ public class NativeCleanuper {
         public void cleanup() {
             if (nativeType == TYPE_JSON) {
                 NativeEngine.starJsonCleanup(nativePtr);
+            } else if (nativeType == TYPE_TEXT) {
+                NativeEngine.starTextCleanup(nativePtr);
             }
         }
     }
