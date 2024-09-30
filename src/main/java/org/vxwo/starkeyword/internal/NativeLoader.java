@@ -39,9 +39,9 @@ public class NativeLoader {
     public static void loadLibrary(String libname) {
         String libFile = null;
         String osName = getOs();
-        if (osName.contains("windows")) {
+        if (osName.equals("win32")) {
             libFile = libname + ".dll";
-        } else if (osName.contains("mac")) {
+        } else if (osName.equals("darwin")) {
             libFile = "lib" + libname + ".dylib";
         } else {
             libFile = "lib" + libname + ".so";

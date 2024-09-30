@@ -4,12 +4,12 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.vxwo.jni</groupId>
-  <artifactId>star-json</artifactId>
+  <groupId>org.vxwo.starkeyword</groupId>
+  <artifactId>starkeyword</artifactId>
   <version>1.0.0-SNAPSHOT</version>
 
-  <name>star-json</name>
-  <description>Star json text for Java</description>
+  <name>star-keyword</name>
+  <description>Star text by keywords for Java</description>
 
   <properties>
     <java.version>1.8</java.version>
