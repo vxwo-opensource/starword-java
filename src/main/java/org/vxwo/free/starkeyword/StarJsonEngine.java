@@ -17,9 +17,9 @@ public class StarJsonEngine extends BaseNativeObject {
         return NativeEngine.starJsonProcess(getNativePtr(), content);
     }
 
-    public static StarJsonEngine create(String[] keywords, boolean ignoreCawe, boolean skipNumber,
+    public static StarJsonEngine create(String[] keywords, boolean ignoreCase, boolean skipNumber,
             int leftBorder, int rightBorder) {
-        long nativePtr = NativeEngine.starJsonCreate(keywords, ignoreCawe, skipNumber, leftBorder,
+        long nativePtr = NativeEngine.starJsonCreate(keywords, ignoreCase, skipNumber, leftBorder,
                 rightBorder);
         StarJsonEngine obj = new StarJsonEngine(nativePtr);
         NativeCleanuper.register(obj);
