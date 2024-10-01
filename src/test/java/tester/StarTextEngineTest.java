@@ -3,13 +3,14 @@ package tester;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.vxwo.free.starkeyword.StarOptions;
 import org.vxwo.free.starkeyword.StarTextEngine;
 
 public class StarTextEngineTest {
     private static final String[] keywords = new String[] {"phone", "mobile"};
 
     private StarTextEngine getDefaultEngine() {
-        return StarTextEngine.create(keywords, false, 1, 1);
+        return StarTextEngine.create(keywords, new StarOptions(false, 1, 1));
     }
 
     @Test
@@ -50,7 +51,7 @@ public class StarTextEngineTest {
     @Test
     @Order(2000)
     void testStarTextNoBorder() {
-        StarTextEngine starEngine = StarTextEngine.create(keywords, false, 0, 0);
+        StarTextEngine starEngine = StarTextEngine.create(keywords, new StarOptions(false, 0, 0));
 
         String source = "i have a phone";
         String target = "i have a *****";
@@ -60,7 +61,7 @@ public class StarTextEngineTest {
     @Test
     @Order(2001)
     void testStarTextIgnoreCase() {
-        StarTextEngine starEngine = StarTextEngine.create(keywords, true, 0, 0);
+        StarTextEngine starEngine = StarTextEngine.create(keywords, new StarOptions(true, 0, 0));
 
         String source = "i have a PhoNe";
         String target = "i have a *****";
@@ -70,7 +71,7 @@ public class StarTextEngineTest {
     @Test
     @Order(2002)
     void testStarTextIgnoreCaseLeft1() {
-        StarTextEngine starEngine = StarTextEngine.create(keywords, true, 1, 0);
+        StarTextEngine starEngine = StarTextEngine.create(keywords, new StarOptions(true, 1, 0));
 
         String source = "i have a PhoNe";
         String target = "i have a P****";
@@ -80,7 +81,7 @@ public class StarTextEngineTest {
     @Test
     @Order(2003)
     void testStarTextIgnoreCaseRight1() {
-        StarTextEngine starEngine = StarTextEngine.create(keywords, true, 0, 1);
+        StarTextEngine starEngine = StarTextEngine.create(keywords, new StarOptions(true, 0, 1));
 
         String source = "i have a PhoNe";
         String target = "i have a ****e";

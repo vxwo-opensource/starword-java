@@ -2,15 +2,30 @@
 
 #include <vector>
 
+#include "core/src/star_base.h"
 #include "core/src/star_json.h"
 #include "core/src/star_text.h"
 
+static void ParseObjectToOptions(JNIEnv *env, jobject optionsObject,
+                                 StarOptions &options) {
+  jclass optionsClass = env->GetObjectClass(optionsObject);
+  jmethodID iicMid = env->GetMethodID(optionsClass, "isIgnoreCase", "()Z");
+  options.ignore_case = (jboolean)env->CallBooleanMethod(optionsObject, iicMid);
+  jmethodID glbMid = env->GetMethodID(optionsClass, "getLeftBorder", "()I");
+  options.left_border = (jboolean)env->CallBooleanMethod(optionsObject, glbMid);
+  jmethodID grbMid = env->GetMethodID(optionsClass, "getRightBorder", "()I");
+  options.right_border =
+      (jboolean)env->CallBooleanMethod(optionsObject, grbMid);
+}
+
 extern "C" JNIEXPORT jlong JNICALL
 Java_org_vxwo_free_starkeyword_internal_NativeEngine_starJsonCreate(
-    JNIEnv *env, jobject thisObject, jobjectArray keywords, jboolean ignoreCase,
-    jboolean skipNumber, jint leftBorder, jint rightBorder) {
-  StarJson *starJson =
-      new StarJson(ignoreCase, skipNumber, leftBorder, rightBorder);
+    JNIEnv *env, jobject thisObject, jobjectArray keywords, jboolean skipNumber,
+    jobject optionsObject) {
+  StarOptions options{false, 0, 0};
+  ParseObjectToOptions(env, optionsObject, options);
+
+  StarJson *starJson = new StarJson(options, skipNumber);
   jsize count = env->GetArrayLength(keywords);
   for (int i = 0; i < count; ++i) {
     jstring keyword = (jstring)env->GetObjectArrayElement(keywords, i);
@@ -45,9 +60,12 @@ Java_org_vxwo_free_starkeyword_internal_NativeEngine_starJsonProcess(
 
 extern "C" JNIEXPORT jlong JNICALL
 Java_org_vxwo_free_starkeyword_internal_NativeEngine_starTextCreate(
-    JNIEnv *env, jobject thisObject, jobjectArray keywords, jboolean ignoreCase,
-    jint leftBorder, jint rightBorder) {
-  StarText *starText = new StarText(ignoreCase, leftBorder, rightBorder);
+    JNIEnv *env, jobject thisObject, jobjectArray keywords,
+    jobject optionsObject) {
+  StarOptions options{false, 0, 0};
+  ParseObjectToOptions(env, optionsObject, options);
+
+  StarText *starText = new StarText(options);
   jsize count = env->GetArrayLength(keywords);
   for (int i = 0; i < count; ++i) {
     jstring keyword = (jstring)env->GetObjectArrayElement(keywords, i);
