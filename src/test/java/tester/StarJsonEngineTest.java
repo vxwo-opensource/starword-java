@@ -3,7 +3,7 @@ package tester;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.vxwo.starkeyword.StarJsonEngine;
+import org.vxwo.free.starkeyword.StarJsonEngine;
 
 public class StarJsonEngineTest {
     private static final String[] keywords = new String[] {"phone", "mobile"};

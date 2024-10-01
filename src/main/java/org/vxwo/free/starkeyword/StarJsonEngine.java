@@ -1,8 +1,8 @@
-package org.vxwo.starkeyword;
+package org.vxwo.free.starkeyword;
 
-import org.vxwo.starkeyword.internal.BaseNativeObject;
-import org.vxwo.starkeyword.internal.NativeCleanuper;
-import org.vxwo.starkeyword.internal.NativeEngine;
+import org.vxwo.free.starkeyword.internal.BaseNativeObject;
+import org.vxwo.free.starkeyword.internal.NativeCleanuper;
+import org.vxwo.free.starkeyword.internal.NativeEngine;
 
 public class StarJsonEngine extends BaseNativeObject {
     private StarJsonEngine(long nativePtr) {

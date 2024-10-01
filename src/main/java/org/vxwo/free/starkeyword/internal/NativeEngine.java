@@ -1,4 +1,4 @@
-package org.vxwo.starkeyword.internal;
+package org.vxwo.free.starkeyword.internal;
 
 public class NativeEngine {
     public static native long starJsonCreate(String[] keywords, boolean ignoreCase,
