@@ -1,6 +1,7 @@
 cmake_minimum_required (VERSION 2.8.12)
 
 project ("starkeyword-jni")
+
 if (CMAKE_HOST_WIN32)
   set(OS_KEY "win32")
 elseif(CMAKE_HOST_APPLE)
@@ -12,6 +13,12 @@ else()
 endif()
 string(TOLOWER "${CMAKE_HOST_SYSTEM_PROCESSOR}" ARCH_KEY)
 string(REPLACE "amd64" "x86_64" ARCH_KEY "${ARCH_KEY}")
+
+if (CMAKE_HOST_WIN32)
+  set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT /DNDEBUG")
+else()
+  set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -dNDEBUG")
+endif()
 
 find_package (JNI REQUIRED)
 include_directories(${JNI_INCLUDE_DIRS})
