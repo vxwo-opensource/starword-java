@@ -1,4 +1,4 @@
-package org.vxwo.free.starkeyword.internal;
+package org.vxwo.free.starword.internal;
 
 import java.lang.ref.PhantomReference;
 import java.lang.ref.ReferenceQueue;

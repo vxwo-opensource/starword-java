@@ -1,4 +1,4 @@
-package org.vxwo.free.starkeyword;
+package org.vxwo.free.starword;
 
 public class StarOptions {
     private boolean ignoreCase;

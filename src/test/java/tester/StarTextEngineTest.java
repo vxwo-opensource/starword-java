@@ -3,8 +3,8 @@ package tester;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.vxwo.free.starkeyword.StarOptions;
-import org.vxwo.free.starkeyword.StarTextEngine;
+import org.vxwo.free.starword.StarOptions;
+import org.vxwo.free.starword.StarTextEngine;
 
 public class StarTextEngineTest {
     private static final String[] keywords = new String[] {"phone", "mobile"};

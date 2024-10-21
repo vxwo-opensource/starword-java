@@ -1,4 +1,4 @@
-package org.vxwo.free.starkeyword.internal;
+package org.vxwo.free.starword.internal;
 
 import java.io.File;
 import java.io.IOException;

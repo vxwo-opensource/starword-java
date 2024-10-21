@@ -1,6 +1,6 @@
-package org.vxwo.free.starkeyword.internal;
+package org.vxwo.free.starword.internal;
 
-import org.vxwo.free.starkeyword.StarOptions;
+import org.vxwo.free.starword.StarOptions;
 
 public class NativeEngine {
     public static native long starJsonCreate(String[] keywords, boolean skipNumber,
@@ -17,6 +17,6 @@ public class NativeEngine {
     public static native String starTextProcess(long ptr, String content);
 
     static {
-        NativeLoader.loadLibrary("starkeyword-jni");
+        NativeLoader.loadLibrary("starword-java");
     }
 }

@@ -5,11 +5,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.vxwo.free</groupId>
-  <artifactId>starkeyword</artifactId>
+  <artifactId>starword</artifactId>
   <version>1.0.0-SNAPSHOT</version>
 
-  <name>star-keyword</name>
-  <description>Star text by keywords for Java</description>
+  <name>starword</name>
+  <description>Use Star mask words for Java</description>
 
   <properties>
     <java.version>1.8</java.version>

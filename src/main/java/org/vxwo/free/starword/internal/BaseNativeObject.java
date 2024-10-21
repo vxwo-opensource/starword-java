@@ -1,4 +1,4 @@
-package org.vxwo.free.starkeyword.internal;
+package org.vxwo.free.starword.internal;
 
 public abstract class BaseNativeObject {
     private int nativeType;

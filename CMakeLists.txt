@@ -34,7 +34,7 @@ aux_source_directory(jni/core/src CORE_SOURCES)
 add_library(
   ${PROJECT_NAME}
   SHARED
-  jni/star-keyword-jni.cc ${CORE_SOURCES}
+  jni/starword-jni.cc ${CORE_SOURCES}
 )
 target_link_libraries(
   ${PROJECT_NAME}
