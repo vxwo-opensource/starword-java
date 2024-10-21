@@ -1,11 +1,11 @@
-star-keyword-java
+starword-java
 ===================================
 
-A native star text by keywords library for Java
+A native use `star` mark words for Java
 
 # Support System
 
-| *Os*    | *Arch* | *Jdk* |
+| *OS*    | *Arch* | *JDK* |
 |---------|--------|-------|
 | windows | x86_64 | 8     |
 | linux   | x86_64 | 8     |
