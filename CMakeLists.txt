@@ -1,6 +1,12 @@
-cmake_minimum_required (VERSION 2.8.12)
+cmake_minimum_required (VERSION 3.11)
 
-project ("starkeyword-jni")
+project ("starword-java" LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 11)
+
+if(MSVC)
+  add_compile_options("/utf-8")
+endif()
 
 if (CMAKE_HOST_WIN32)
   set(OS_KEY "win32")

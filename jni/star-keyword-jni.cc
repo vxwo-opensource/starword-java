@@ -30,10 +30,12 @@ Java_org_vxwo_free_starkeyword_internal_NativeEngine_starJsonCreate(
   for (int i = 0; i < count; ++i) {
     jstring keyword = (jstring)env->GetObjectArrayElement(keywords, i);
     const jchar *buffer = env->GetStringCritical(keyword, 0);
-    starJson->AddKeyword((skchar_t *)buffer, env->GetStringLength(keyword));
+    starJson->AddWord((skchar_t *)buffer, env->GetStringLength(keyword));
     env->ReleaseStringCritical(keyword, buffer);
     env->DeleteLocalRef(keyword);
   }
+  starJson->FinishAdd();
+
   return (jlong)starJson;
 }
 
@@ -70,10 +72,12 @@ Java_org_vxwo_free_starkeyword_internal_NativeEngine_starTextCreate(
   for (int i = 0; i < count; ++i) {
     jstring keyword = (jstring)env->GetObjectArrayElement(keywords, i);
     const jchar *buffer = env->GetStringCritical(keyword, 0);
-    starText->AddKeyword((skchar_t *)buffer, env->GetStringLength(keyword));
+    starText->AddWord((skchar_t *)buffer, env->GetStringLength(keyword));
     env->ReleaseStringCritical(keyword, buffer);
     env->DeleteLocalRef(keyword);
   }
+  starText->FinishAdd();
+
   return (jlong)starText;
 }
 
