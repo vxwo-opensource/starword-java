@@ -20,12 +20,12 @@ static void ParseObjectToOptions(JNIEnv *env, jobject optionsObject,
 
 extern "C" JNIEXPORT jlong JNICALL
 Java_org_vxwo_free_starword_internal_NativeEngine_starJsonCreate(
-    JNIEnv *env, jobject thisObject, jobjectArray keywords, jboolean skipNumber,
+    JNIEnv *env, jobject thisObject, jobjectArray keywords,
     jobject optionsObject) {
   StarOptions options{false, 0, 0};
   ParseObjectToOptions(env, optionsObject, options);
 
-  StarJson *starJson = new StarJson(options, skipNumber);
+  StarJson *starJson = new StarJson(options);
   jsize count = env->GetArrayLength(keywords);
   for (int i = 0; i < count; ++i) {
     jstring keyword = (jstring)env->GetObjectArrayElement(keywords, i);
