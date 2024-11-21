@@ -48,7 +48,7 @@ public class NativeLoader {
         }
 
         String filePath = "/jni/" + libFile;
-        String resourcePath = "/jni/" + osName + "/" + getArch() + "/" + libFile;
+        String resourcePath = "/jni/" + osName + "-" + getArch() + "/" + libFile;
 
         File outFile = null;
         InputStream in = null;
