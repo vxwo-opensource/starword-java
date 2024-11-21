@@ -1,3 +1,3 @@
 [submodule "jni/core"]
-	path = jni/core
+	path = src/native/core
 	url = https://github.com/vxwo-opensource/starword-core.git

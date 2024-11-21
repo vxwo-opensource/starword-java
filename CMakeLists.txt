@@ -29,12 +29,12 @@ endif()
 find_package (JNI REQUIRED)
 include_directories(${JNI_INCLUDE_DIRS})
 
-aux_source_directory(jni/core/src CORE_SOURCES)
+aux_source_directory(src/native/core/src CORE_SOURCES)
 
 add_library(
   ${PROJECT_NAME}
   SHARED
-  jni/starword-jni.cc ${CORE_SOURCES}
+  src/native/starword-jni.cc ${CORE_SOURCES}
 )
 target_link_libraries(
   ${PROJECT_NAME}
@@ -42,7 +42,7 @@ target_link_libraries(
   ${JNI_LIBRARIES}
 )
 
-set(NATIVE_RESOURCES_DIR "${PROJECT_SOURCE_DIR}/src/main/resources/jni/${OS_KEY}-${ARCH_KEY}")
+set(NATIVE_RESOURCES_DIR "${PROJECT_SOURCE_DIR}/src/main/resources/native/${OS_KEY}-${ARCH_KEY}")
 add_custom_command(
   TARGET ${PROJECT_NAME} POST_BUILD
   COMMAND ${CMAKE_COMMAND} -E make_directory "${NATIVE_RESOURCES_DIR}"
