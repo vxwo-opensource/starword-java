@@ -2,4 +2,4 @@
 setlocal
 
 cmake -B build
-cmake --build build --config=Release
+cmake --build build --config Release

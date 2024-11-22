@@ -26,9 +26,10 @@ else()
   set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -dNDEBUG")
 endif()
 
-find_package (JNI REQUIRED)
-include_directories(${JNI_INCLUDE_DIRS})
-
+include_directories(
+  src/native/include
+  src/native/include/${OS_KEY}
+)
 aux_source_directory(src/native/core/src CORE_SOURCES)
 
 add_library(
