@@ -4,20 +4,10 @@ GRTAGS
 
 .*
 target/
-src/main/resources/jni/
 
 *.cmake
 CMakeFiles/
 CMakeCache.txt
 
 bin/
-Makefile
-libstarkeyword-jni.*
-
-x64/
-Debug/
-Release/
-*.dir/
-*.sln
-*.vcxproj
-*.vcxproj.*
+build/
