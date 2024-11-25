@@ -11,3 +11,28 @@ A native use `star` mark words for Java
 | linux   | x86_64  | 8     |
 | drawin  | x86_64  | 8     |
 | drawin  | aarch64 | 8     |
+
+# Usage
+
+```xml
+<project>
+
+  <properties>
+    <starword.version>0.9.1</starword.version>
+
+    ... others
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.vxwo.free</groupId>
+      <artifactId>starword</artifactId>
+      <version>${starword.version}</version>
+    </dependency>
+
+  ... others
+  </dependencies>
+
+  ... others
+</project>
+```
