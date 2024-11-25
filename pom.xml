@@ -6,7 +6,7 @@
 
   <groupId>org.vxwo.free</groupId>
   <artifactId>starword</artifactId>
-  <version>0.9.1</version>
+  <version>0.9.5</version>
 
   <name>starword</name>
   <description>Use Star mask words for Java</description>
