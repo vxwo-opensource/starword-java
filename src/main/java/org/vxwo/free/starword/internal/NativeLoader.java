@@ -40,7 +40,7 @@ public class NativeLoader {
         String libFile = null;
         String osName = getOs();
         if (osName.equals("win32")) {
-            libFile = libname + ".dll";
+            libFile = "lib" + libname + ".dll";
         } else if (osName.equals("darwin")) {
             libFile = "lib" + libname + ".dylib";
         } else {

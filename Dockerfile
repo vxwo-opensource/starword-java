@@ -12,6 +12,14 @@ RUN sed -i_bak 's/archive.ubuntu.com/mirrors.tuna.tsinghua.edu.cn/g' /etc/apt/so
 RUN sed -i_bak 's/security.ubuntu.com/mirrors.tuna.tsinghua.edu.cn/g' /etc/apt/sources.list
 RUN apt-get update && apt-get install -y cmake clang lld libc6-dev
 
+FROM base as build-linux
+COPY . /work
+RUN <<EOF
+    cd /work
+    cmake -B build .
+    cmake --build build --config Release
+EOF
+
 FROM base as build-drawin
 COPY . /work
 ENV PATH="/osxcross/bin:$PATH"
@@ -35,16 +43,9 @@ RUN <<EOF
     cmake --build build --config Release
 EOF
 
-FROM dockcross/linux-x64:${DOCKCROSS_VERSION} as build-linux
-COPY . /work
-RUN <<EOF
-    cd /work
-    cmake -B build .
-    cmake --build build --config Release
-EOF
-
 FROM ubuntu:${UBUNTU_VERSION} AS release
 WORKDIR /work
-COPY --from=build-drawin /work/src/main/resources/native/ /work
-COPY --from=build-windows /work/src/main/resources/native/ /work
-COPY --from=build-linux /work/src/main/resources/native/ /work
+COPY --from=build-drawin /work/src/main/resources/native /work/
+COPY --from=build-windows /work/src/main/resources/native /work/
+COPY --from=build-linux /work/src/main/resources/native /work/
+
