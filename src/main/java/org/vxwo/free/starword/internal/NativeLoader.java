@@ -7,10 +7,8 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
 public class NativeLoader {
-    private static String resourceToSystem(String resourcePath) {
-        return File.separatorChar == '/' ? resourcePath
-                : resourcePath.replace('/', File.separatorChar);
-    }
+    private final static String BINARY_VERSION = "v20241115";
+
 
     private static String getOs() {
         String osName = System.getProperty("os.name").toLowerCase();
@@ -36,6 +34,14 @@ public class NativeLoader {
         }
     }
 
+    private static String getTempFilePath(String resourcePath) {
+        String filePath = File.separatorChar == '/' ? resourcePath
+                : resourcePath.replace('/', File.separatorChar);
+
+        return System.getProperty("java.io.tmpdir") + File.separatorChar + "starword-"
+                + BINARY_VERSION + File.separatorChar + filePath;
+    }
+
     public static void loadLibrary(String libname) {
         String libFile = null;
         String osName = getOs();
@@ -47,37 +53,36 @@ public class NativeLoader {
             libFile = "lib" + libname + ".so";
         }
 
-        String filePath = "/native/" + libFile;
         String resourcePath = "/native/" + osName + "-" + getArch() + "/" + libFile;
 
-        File outFile = null;
-        InputStream in = null;
+        File targetFile = new File(getTempFilePath(resourcePath));
         try {
-            in = NativeLoader.class.getResourceAsStream(resourcePath);
-            if (in != null) {
-                outFile =
-                        new File(System.getProperty("java.io.tmpdir") + resourceToSystem(filePath));
-                if (!outFile.getParentFile().exists()) {
-                    outFile.getParentFile().mkdirs();
+            System.load(targetFile.getPath());
+        } catch (UnsatisfiedLinkError ex1) {
+            InputStream in = null;
+            try {
+                in = NativeLoader.class.getResourceAsStream(resourcePath);
+                if (in != null) {
+                    if (!targetFile.getParentFile().exists()) {
+                        targetFile.getParentFile().mkdirs();
+                    }
+                    Files.copy(in, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
                 }
-                Files.copy(in, outFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-            }
-
-        } catch (Throwable ex) {
-            outFile = null;
-        } finally {
-            if (in != null) {
+            } catch (Throwable ex) {
                 try {
-                    in.close();
-                } catch (IOException e) {
+                    Thread.sleep(1);
+                } catch (InterruptedException e) {
+                }
+            } finally {
+                if (in != null) {
+                    try {
+                        in.close();
+                    } catch (IOException e) {
+                    }
                 }
             }
-        }
 
-        if (outFile != null) {
-            System.load(outFile.getPath());
-        } else {
-            System.loadLibrary(libname);
+            System.load(targetFile.getPath());
         }
     }
 }
