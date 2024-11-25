@@ -41,6 +41,7 @@ public class NativeCleanuper {
             }
         });
         cleanupThread.setDaemon(true);
+        cleanupThread.setName("starword-reference-cleanup");
         cleanupThread.start();
     }
 
