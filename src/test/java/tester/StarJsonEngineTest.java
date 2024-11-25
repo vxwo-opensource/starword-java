@@ -233,4 +233,14 @@ public class StarJsonEngineTest {
         String target = "{\"PhonE\":\"*******8\"}";
         Assertions.assertEquals(target, starEngine.process(source));
     }
+
+    @Test
+    @Order(3000)
+    void testStarJsonSurrogateNoBorder() {
+        StarJsonEngine starEngine = StarJsonEngine.create(keywords, new StarOptions(false, 0, 0));
+
+        String source = "{\"phone\":\"𝄞𝄞𝄞𝄞𝄞\"}";
+        String target = "{\"phone\":\"**********\"}";
+        Assertions.assertEquals(target, starEngine.process(source));
+    }
 }

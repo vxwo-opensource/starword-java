@@ -7,7 +7,7 @@ import org.vxwo.free.starword.StarOptions;
 import org.vxwo.free.starword.StarTextEngine;
 
 public class StarTextEngineTest {
-    private static final String[] keywords = new String[] {"phone", "mobile"};
+    private static final String[] keywords = new String[] {"phone", "mobile", "𝄞𝄞𝄞𝄞𝄞"};
 
     private StarTextEngine getDefaultEngine() {
         return StarTextEngine.create(keywords, new StarOptions(false, 1, 1));
@@ -85,6 +85,16 @@ public class StarTextEngineTest {
 
         String source = "i have a PhoNe";
         String target = "i have a ****e";
+        Assertions.assertEquals(target, starEngine.process(source));
+    }
+
+    @Test
+    @Order(3000)
+    void testStarTextSurrogateNoBorder() {
+        StarTextEngine starEngine = StarTextEngine.create(keywords, new StarOptions(false, 0, 0));
+
+        String source = "i have a 𝄞𝄞𝄞𝄞𝄞";
+        String target = "i have a **********";
         Assertions.assertEquals(target, starEngine.process(source));
     }
 

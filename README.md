@@ -3,14 +3,14 @@ starword-java
 
 A native use `star` mark words for Java
 
-# Native support System
+# Native support
 
 | *OS*    | *Arch*  | *JDK* |
 |---------|---------|-------|
 | windows | x86_64  | 8     |
 | linux   | x86_64  | 8     |
-| drawin  | x86_64  | 8     |
-| drawin  | aarch64 | 8     |
+| darwin  | x86_64  | 8     |
+| darwin  | aarch64 | 8     |
 
 # Usage
 
