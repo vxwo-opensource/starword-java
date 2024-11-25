@@ -21,7 +21,7 @@ ENV PATH="/osxcross/bin:$PATH"
 ENV LD_LIBRARY_PATH="/osxcross/lib:$LD_LIBRARY_PATH"
 RUN sed -i_bak 's/archive.ubuntu.com/mirrors.tuna.tsinghua.edu.cn/g' /etc/apt/sources.list
 RUN sed -i_bak 's/security.ubuntu.com/mirrors.tuna.tsinghua.edu.cn/g' /etc/apt/sources.list
-RUN apt-get update && apt-get install -y cmake clang lld libc6-dev
+RUN apt-get update && apt-get install -y cmake clang lld
 RUN --mount=type=bind,from=osxcross,source=/osxcross,target=/osxcross \
     <<EOF
     cd /work
