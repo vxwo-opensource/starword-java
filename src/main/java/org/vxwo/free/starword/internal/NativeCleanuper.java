@@ -1,34 +1,45 @@
 package org.vxwo.free.starword.internal;
 
 import java.lang.ref.PhantomReference;
+import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class NativeCleanuper {
 
-    private static class CleanupReference extends PhantomReference<BaseNativeObject> {
+    private static class CleanupNativeObject {
         private final int nativeType;
         private final long nativePtr;
 
-        public CleanupReference(BaseNativeObject referent,
-                ReferenceQueue<? super BaseNativeObject> q) {
-            super(referent, q);
-            this.nativeType = referent.getNativeType();
-            this.nativePtr = referent.getNativePtr();
+        protected CleanupNativeObject(int nativeType, long nativePtr) {
+            this.nativeType = nativeType;
+            this.nativePtr = nativePtr;
         }
 
-        public void cleanup() {
-            BaseNativeObject.nativeCleanup(nativeType, nativePtr);
+        public int getNativeType() {
+            return nativeType;
+        }
+
+        public long getNativePtr() {
+            return nativePtr;
         }
     }
 
     private static final ReferenceQueue<BaseNativeObject> referenceQueue = new ReferenceQueue<>();
+    private static final Map<Reference<?>, CleanupNativeObject> referenceObjects =
+            new ConcurrentHashMap<>();
 
     static {
         Thread cleanupThread = new Thread(() -> {
             while (true) {
                 try {
-                    CleanupReference ref = (CleanupReference) referenceQueue.remove();
-                    ref.cleanup();
+                    Reference<?> ref = referenceQueue.remove();
+                    CleanupNativeObject object = referenceObjects.remove(ref);
+                    if (object != null) {
+                        BaseNativeObject.nativeCleanup(object.getNativeType(),
+                                object.getNativePtr());
+                    }
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                     break;
@@ -40,6 +51,8 @@ public class NativeCleanuper {
     }
 
     public static void register(BaseNativeObject referent) {
-        new CleanupReference(referent, referenceQueue);
+        Reference<?> ref = new PhantomReference<>(referent, referenceQueue);
+        referenceObjects.put(ref,
+                new CleanupNativeObject(referent.getNativeType(), referent.getNativePtr()));
     }
 }
