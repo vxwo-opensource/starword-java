@@ -10,7 +10,7 @@ import org.vxwo.free.starword.internal.NativeEngine;
 
 public class StarTextEngine extends BaseNativeObject {
     private StarTextEngine(long nativePtr) {
-        super(NativeCleanuper.TYPE_TEXT, nativePtr);
+        super(TYPE_TEXT, nativePtr);
     }
 
     /**

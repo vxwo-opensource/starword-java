@@ -4,12 +4,10 @@ import java.lang.ref.PhantomReference;
 import java.lang.ref.ReferenceQueue;
 
 public class NativeCleanuper {
-    public static int TYPE_JSON = 1;
-    public static int TYPE_TEXT = 2;
 
     private static class CleanupReference extends PhantomReference<BaseNativeObject> {
-        private int nativeType;
-        private long nativePtr;
+        private final int nativeType;
+        private final long nativePtr;
 
         public CleanupReference(BaseNativeObject referent,
                 ReferenceQueue<? super BaseNativeObject> q) {
@@ -19,11 +17,7 @@ public class NativeCleanuper {
         }
 
         public void cleanup() {
-            if (nativeType == TYPE_JSON) {
-                NativeEngine.starJsonCleanup(nativePtr);
-            } else if (nativeType == TYPE_TEXT) {
-                NativeEngine.starTextCleanup(nativePtr);
-            }
+            BaseNativeObject.nativeCleanup(nativeType, nativePtr);
         }
     }
 

@@ -10,7 +10,7 @@ import org.vxwo.free.starword.internal.NativeEngine;
 
 public class StarJsonEngine extends BaseNativeObject {
     private StarJsonEngine(long nativePtr) {
-        super(NativeCleanuper.TYPE_JSON, nativePtr);
+        super(TYPE_JSON, nativePtr);
     }
 
     /**
