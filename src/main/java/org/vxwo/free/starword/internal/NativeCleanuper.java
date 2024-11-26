@@ -12,10 +12,10 @@ public class NativeCleanuper {
         private long nativePtr;
 
         public CleanupReference(BaseNativeObject referent,
-                ReferenceQueue<? super BaseNativeObject> q, int nativeType, long nativePtr) {
+                ReferenceQueue<? super BaseNativeObject> q) {
             super(referent, q);
-            this.nativeType = nativeType;
-            this.nativePtr = nativePtr;
+            this.nativeType = referent.getNativeType();
+            this.nativePtr = referent.getNativePtr();
         }
 
         public void cleanup() {
@@ -36,17 +36,16 @@ public class NativeCleanuper {
                     CleanupReference ref = (CleanupReference) referenceQueue.remove();
                     ref.cleanup();
                 } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
                     break;
                 }
             }
-        });
+        }, "starword-reference-cleanup");
         cleanupThread.setDaemon(true);
-        cleanupThread.setName("starword-reference-cleanup");
         cleanupThread.start();
     }
 
     public static void register(BaseNativeObject referent) {
-        new CleanupReference(referent, referenceQueue, referent.getNativeType(),
-                referent.getNativePtr());
+        new CleanupReference(referent, referenceQueue);
     }
 }
