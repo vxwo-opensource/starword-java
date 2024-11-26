@@ -18,7 +18,7 @@ A native use `star` mark words for Java
 <project>
 
   <properties>
-    <starword.version>0.9.5</starword.version>
+    <starword.version>0.9.8</starword.version>
 
     ... others
   </properties>
