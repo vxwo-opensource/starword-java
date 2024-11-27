@@ -11,6 +11,7 @@ import org.vxwo.free.starword.StarOptions;
 @Disabled
 public class MemoryUsageTest {
     private static final int GC_COUNT = 100;
+    private static final int THREAD_COUNT = 100;
     private static final int TEXT_LENGTH = 10000;
 
     private static final String[] keywords = new String[] {"test", repeatString("a", TEXT_LENGTH),
@@ -77,5 +78,32 @@ public class MemoryUsageTest {
         });
         thread.start();
         thread.join();
+    }
+
+
+    @Test
+    void testThreads() throws InterruptedException {
+        StarJsonEngine starEngine = getDefaultEngine();
+        Thread[] threads = new Thread[THREAD_COUNT];
+        for (int i = 0; i < threads.length; ++i) {
+            threads[i] = new Thread(() -> {
+                try {
+                    while (true) {
+                        Assertions.assertEquals(target, starEngine.process(source));
+                        Thread.sleep(50);
+                    }
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                } catch (Exception ex) {
+                }
+            });
+        }
+
+        for (int i = 0; i < threads.length; ++i) {
+            threads[i].start();
+        }
+        for (int i = 0; i < threads.length; ++i) {
+            threads[i].join();
+        }
     }
 }
