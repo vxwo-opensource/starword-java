@@ -1,3 +1,7 @@
+1.0.0
+====================
+* Refactory API
+
 0.9.8
 ====================
 * Fix NativeObject cleanup
