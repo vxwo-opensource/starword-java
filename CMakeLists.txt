@@ -21,6 +21,8 @@ string(REPLACE "amd64" "x86_64" ARCH_KEY "${ARCH_KEY}")
 
 if (MSVC)
   set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
+elseif (OS_KEY STREQUAL "win32")
+  list(APPEND CMAKE_CXX_FLAGS "-static")
 endif()
 
 include_directories(

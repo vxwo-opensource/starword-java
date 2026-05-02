@@ -6,9 +6,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.vxwo.free.starword.StarJsonEngine;
-import org.vxwo.free.starword.StarOptions;
+import org.vxwo.free.starword.StarJsonOptions;
+import org.vxwo.free.starword.StarMethod;
 
-@Disabled
 public class MemoryUsageTest {
     private static final int GC_COUNT = 100;
     private static final int THREAD_COUNT = 100;
@@ -29,10 +29,11 @@ public class MemoryUsageTest {
     }
 
     private StarJsonEngine getDefaultEngine() {
-        return StarJsonEngine.create(keywords, new StarOptions(false, 0, 0));
+        return StarJsonEngine.create(new StarJsonOptions(false, new StarMethod(0, 0)), keywords);
     }
 
     @Test
+    @Disabled
     void testProcess() throws InterruptedException {
         StarJsonEngine starEngine = getDefaultEngine();
         Thread thread = new Thread(() -> {
@@ -55,6 +56,7 @@ public class MemoryUsageTest {
     }
 
     @Test
+    @Disabled
     void testInstance() throws InterruptedException {
         List<StarJsonEngine> cached = new ArrayList<>();
         Thread thread = new Thread(() -> {
@@ -80,8 +82,8 @@ public class MemoryUsageTest {
         thread.join();
     }
 
-
     @Test
+    @Disabled
     void testThreads() throws InterruptedException {
         StarJsonEngine starEngine = getDefaultEngine();
         Thread[] threads = new Thread[THREAD_COUNT];

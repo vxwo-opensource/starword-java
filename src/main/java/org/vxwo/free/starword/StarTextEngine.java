@@ -5,23 +5,28 @@ import org.vxwo.free.starword.internal.NativeCleanuper;
 import org.vxwo.free.starword.internal.NativeEngine;
 
 /**
- * Use "star" to mask words in a "simple text".
+ * Masks specified keywords in plain text by replacing their inner characters with asterisks.
+ * <p>
+ * This engine operates on plain text content. Keywords are matched based on the
+ * configured {@link StarTextOptions}, and matched portions are partially masked
+ * while preserving the configured left and right border characters.
+ * </p>
+ * <p>
+ * Instances are backed by native resources and should not be used after their
+ * native handle is released.
+ * </p>
  */
-
 public class StarTextEngine extends BaseNativeObject {
     private StarTextEngine(long nativePtr) {
         super(TYPE_TEXT, nativePtr);
     }
 
     /**
-     * Processes the given text content by replacing specified keywords with "stars".
-     * <p>
-     * This method interacts with the native engine to perform the masking.
-     * </p>
+     * Masks configured keywords in the given text.
      *
-     * @param content the text content to be processed.
-     * @return the processed text with specified keywords masked. If the input is {@code null}
-     *         or empty, the original content is returned.
+     * @param content the text to process
+     * @return the text with matched keywords partially masked; returns the original
+     *         content if it is {@code null} or empty
      */
     public String process(String content) {
         if (content == null || content.isEmpty()) {
@@ -32,17 +37,14 @@ public class StarTextEngine extends BaseNativeObject {
     }
 
     /**
-     * Creates a new {@code StarTextEngine} instance with the specified keywords and options.
-     * <p>
-     * This method initializes the native resources required for text processing.
-     * </p>
+     * Creates a new {@code StarTextEngine} instance.
      *
-     * @param keywords an array of keywords to be masked in the text content.
-     * @param options  the {@link StarOptions} object containing configuration settings for the engine.
-     * @return a new instance of {@code StarTextEngine}.
+     * @param options configuration settings controlling matching and masking behavior
+     * @param keywords keywords to be masked in processed text
+     * @return a new {@code StarTextEngine} instance
      */
-    public static StarTextEngine create(String[] keywords, StarOptions options) {
-        long nativePtr = NativeEngine.starTextCreate(keywords, options);
+    public static StarTextEngine create(StarTextOptions options, String[] keywords) {
+        long nativePtr = NativeEngine.starTextCreate(options, keywords);
         StarTextEngine obj = new StarTextEngine(nativePtr);
         NativeCleanuper.register(obj);
         return obj;

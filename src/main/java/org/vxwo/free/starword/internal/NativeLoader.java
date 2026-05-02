@@ -7,7 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
 public class NativeLoader {
-    private final static String BINARY_VERSION = "v20241115";
+    private final static String BINARY_VERSION = "v20260502";
 
 
     private static String getOs() {

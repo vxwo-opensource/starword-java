@@ -5,20 +5,28 @@ import org.vxwo.free.starword.internal.NativeCleanuper;
 import org.vxwo.free.starword.internal.NativeEngine;
 
 /**
- * Use "star" to mask value of words in a "JSON text".
+ * Masks values in JSON content by replacing inner characters with asterisks.
+ * <p>
+ * This engine parses JSON and selectively masks field values based on configured
+ * keywords and per-key {@link StarStrategy} rules. It preserves JSON structure
+ * while partially obscuring matched values.
+ * </p>
+ * <p>
+ * Instances are backed by native resources and should not be used after their
+ * native handle is released.
+ * </p>
  */
-
 public class StarJsonEngine extends BaseNativeObject {
     private StarJsonEngine(long nativePtr) {
         super(TYPE_JSON, nativePtr);
     }
 
     /**
-     * Processes the given JSON content to mask specific values.
+     * Masks configured values in the given JSON content.
      *
-     * @param content the JSON text to be processed
-     * @return the processed JSON text with masked values, 
-     *         or the original content if it is null or empty
+     * @param content the JSON text to process
+     * @return the JSON with matched values partially masked; returns the original
+     *         content if it is {@code null} or empty
      */
     public String process(String content) {
         if (content == null || content.isEmpty()) {
@@ -29,14 +37,30 @@ public class StarJsonEngine extends BaseNativeObject {
     }
 
     /**
-     * Creates a new instance of StarJsonEngine with specified keywords and options.
+     * Creates a new {@code StarJsonEngine} instance with base keywords.
      *
-     * @param keywords an array of keywords that should be masked in the JSON text
-     * @param options  additional options for configuring the masking behavior
-     * @return a new instance of {@link StarJsonEngine}
+     * @param options configuration settings controlling matching and masking behavior
+     * @param keywords base keywords whose corresponding JSON values will be masked
+     * @return a new {@code StarJsonEngine} instance
      */
-    public static StarJsonEngine create(String[] keywords, StarOptions options) {
-        long nativePtr = NativeEngine.starJsonCreate(keywords, options);
+    public static StarJsonEngine create(StarJsonOptions options, String[] keywords) {
+        long nativePtr = NativeEngine.starJsonCreate(options, keywords, null);
+        StarJsonEngine obj = new StarJsonEngine(nativePtr);
+        NativeCleanuper.register(obj);
+        return obj;
+    }
+
+    /**
+     * Creates a new {@code StarJsonEngine} instance with base keywords and custom strategies.
+     *
+     * @param options configuration settings controlling matching and masking behavior
+     * @param keywords base keywords whose corresponding JSON values will be masked
+     * @param strategies additional per-key masking rules that override defaults
+     * @return a new {@code StarJsonEngine} instance
+     */
+    public static StarJsonEngine create(StarJsonOptions options, String[] keywords,
+            StarStrategy[] strategies) {
+        long nativePtr = NativeEngine.starJsonCreate(options, keywords, strategies);
         StarJsonEngine obj = new StarJsonEngine(nativePtr);
         NativeCleanuper.register(obj);
         return obj;
